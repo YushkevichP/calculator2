@@ -1,37 +1,10 @@
 package com.example.homework1calculator
 
-fun main() {
-
-    val calculator = Calculator()
-
-
-    val test1 = calculator.calculate("5 -5")
-    println(test1)
-    val test2 = calculator.calculate("5 * 5 / (10-4)")
-    println(test2)
-    val test3 = calculator.calculate("10 * (10 + 0)")
-    println(test3)
-    val test4 = calculator.calculate("5 + 15 / 3 + 7 * 9")
-    println(test4)
-    val test6 = calculator.calculate("(5+5+20) / (2 * (7-2) * 9)")
-    println("TEST 6 - $test6")
-    val test7 = calculator.calculate("10  * (1  + 1) * 0.5 * 0 + (100 * (200 + 3) / 271)")
-     println(test7)
-    println("(200 * ((10 + 3 * 10 * (37 / 2 + 1 * (1 + 1) / 20 - (7 -1))) + (368+2))) - 1000")
-     val test8 = calculator.calculate("(200 * ((10 - 3 * 10 * (38 / 2 + 1 * (1 + 1) / 20 - (7 -1))) + (8+2))) - 10")
-    println(test8)
-   // val test9 = calculator.calculate(readLine().toString())
-
-
-
-
-}
-
 
 class Calculator {
 
     private val regFindNum = Regex("[-*/+]")
-    private val regFindSigns = Regex("(?<=[^-+*/=,{ ])[-+*/=]")  //(?<=[^-+*/=,{ ])[-+*/=]
+    private val regFindSigns = Regex("[^-+*/=]")  //(?<=[^-+*/=,{ ])[-+*/=]
     private val regexSpace = Regex("[\\s]")
     private val priorityMap = mapOf(
 
@@ -41,8 +14,25 @@ class Calculator {
         "/" to 2
     )
 
-    //counting without braces
     fun calculate(text: String?): String {
+
+        var finalResult = ""
+
+        if (text != null) {
+            if (text.contains('(')) {
+                finalResult = calcWithBraces(text)
+
+            } else finalResult = calculateWithNoBraces(text)
+
+        }
+
+        return finalResult
+
+    }
+
+
+    //counting without braces
+    private fun calculateWithNoBraces(text: String?): String {
 
 
         val trimText = toTrimText(text)
@@ -70,23 +60,6 @@ class Calculator {
         return listNumbers.last()
     }
 
-//        val finalResuln: String
-//
-//        if (text != null) {
-//            if (text.contains('(')) {
-//                finalResuln = calcWithBraces(text)
-//            } else finalResuln = calcWithOutBraces(text)
-//
-//        }
-//return
-//    }
-
-    // 1. making list of signs and numbers
-//    private fun calcWithOutBraces(text: String?): String {
-//
-//
-//    }
-
     private fun toTrimText(text: String?): String {
         return text?.trim()
             ?.replace(regexSpace, "") ?: "Oops smth went wrong"
@@ -101,8 +74,6 @@ class Calculator {
 
         val list = textAfterTrim.split(regFindNum)
             .filter { it.isNotEmpty() }
-
-
 
         for (i in list) {
 
@@ -179,7 +150,7 @@ class Calculator {
             for (i in closeBrace downTo 0) {
                 if (checkBracesText[i] == '(') {
                     openBrace = i
-                    println("Index i=$i closeBrace=$closeBrace  openBrace i=$openBrace checkBracesText[i]=${checkBracesText[i]} checkBracesText[close]=${checkBracesText[closeBrace]}")
+                    //  println("Index i=$i closeBrace=$closeBrace  openBrace i=$openBrace checkBracesText[i]=${checkBracesText[i]} checkBracesText[close]=${checkBracesText[closeBrace]}")
                     break
                 }
 
@@ -188,23 +159,24 @@ class Calculator {
 
             val subText = checkBracesText.substring(openBrace + 1, closeBrace)
             var bufferText = ""
-            println("subText = $subText")
+            //println("subText = $subText")
 
             if (subText.contains(')')) {
                 bufferText = calcWithBraces(subText)
             } else {
                 bufferText = subText
             }
-            println("checkBracesText before replaced = $checkBracesText")
-            checkBracesText = checkBracesText.replace("($subText)", calculate(bufferText))
-            println("checkBracesText after replaced = $checkBracesText")
+            // println("checkBracesText before replaced = $checkBracesText")
+            checkBracesText =
+                checkBracesText.replace("($subText)", calculateWithNoBraces(bufferText))
+            // println("checkBracesText after replaced = $checkBracesText")
 
             if (!checkBracesText.contains('(') && !checkBracesText.contains(')')) {
                 isSorted = true
             }
 
         }
-        return calculate(checkBracesText)
+        return calculateWithNoBraces(checkBracesText)
 
 
     }
