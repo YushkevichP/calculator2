@@ -24,7 +24,11 @@ class CalculatorFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+            with(binding){
+                resultPlace.text = ""
+                workPlace.text = "0"
 
+            }
         //todo
     }
 
