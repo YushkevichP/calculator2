@@ -16,24 +16,27 @@ class Calculator {
 
     fun calculate(text: String?): String {
 
-        var finalResult = ""
+        return text?.let {          // функция расширения .let http://developer.alexanderklimov.ru/android/kotlin/with-apply-also.php
+            if (it.contains('(')){
+                calcWithBraces(it)
+            } else {calculateWithNoBraces(it)}
+        }?:""
 
-        if (text != null) {
-            if (text.contains('(')) {
-                finalResult = calcWithBraces(text)
-
-            } else finalResult = calculateWithNoBraces(text)
-
-        }
-
-        return finalResult
+//        var finalResult = ""
+//
+//        if (text != null) {
+//            if (text.contains('(')) {
+//                finalResult = calcWithBraces(text)
+//
+//            } else finalResult = calculateWithNoBraces(text)
+//
+//        }
+//
+//        return finalResult
 
     }
-
-
     //counting without braces
     private fun calculateWithNoBraces(text: String?): String {
-
 
         val trimText = toTrimText(text)
         for (i in trimText) {
@@ -53,12 +56,13 @@ class Calculator {
             val right = listNumbers.removeAt(index).toDouble()
             val operation = listSigns.removeAt(index)
             val result = calcOneOperation(left, operation, right)
-            listNumbers.add(index, result)
+            listNumbers.add(index, result.toString())
 
         }
 
         return listNumbers.last()
     }
+
 
     private fun toTrimText(text: String?): String {
         return text?.trim()
@@ -112,26 +116,24 @@ class Calculator {
         return index
     }
 
-
     //counting one operation
-    private fun calcOneOperation(left: Double, operation: String, right: Double): String {
+    private fun calcOneOperation(left: Double, operation: String, right: Double): Double {
 
         val resultOneOperation = when (operation) {
-            "*" -> (left * right).toString()
-            "/" -> (left / right).toString()
-            "+" -> (left + right).toString()
-            "-" -> (left - right).toString()
-            else -> "Error: incorrect sign was entered, try again please"
+            "*" -> (left * right)
+            "/" -> (left / right)
+            "+" -> (left + right)
+            "-" -> (left - right)
+            else -> throw Exception("smth went wrong")
         }
 
-        return if (resultOneOperation == "Infinity") {
+        return if (resultOneOperation.toString() == "Infinity") {
             throw Exception("Impossible divide by ZERO")
         } else
 
             resultOneOperation
 
     }
-
 
     //counting with a braces
     private fun calcWithBraces(text: String): String {
@@ -156,16 +158,11 @@ class Calculator {
 
             }
 
-
             val subText = checkBracesText.substring(openBrace + 1, closeBrace)
             var bufferText = ""
             //println("subText = $subText")
 
-            if (subText.contains(')')) {
-                bufferText = calcWithBraces(subText)
-            } else {
-                bufferText = subText
-            }
+            if (subText.contains(')')) bufferText = calcWithBraces(subText) else bufferText = subText
             // println("checkBracesText before replaced = $checkBracesText")
             checkBracesText =
                 checkBracesText.replace("($subText)", calculateWithNoBraces(bufferText))
@@ -177,11 +174,7 @@ class Calculator {
 
         }
         return calculateWithNoBraces(checkBracesText)
-
-
     }
-
-
 }
 
 
