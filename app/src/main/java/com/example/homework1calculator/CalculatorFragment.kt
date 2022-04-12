@@ -31,7 +31,7 @@ class CalculatorFragment : Fragment() {
 
          initButtons()
         binding.resultPlace.setOnClickListener {
-            (requireActivity() as MainActivity).addFragment(HistoryFragment.newInstance(operationHistory))
+            pushFragment(operationHistory)
 
         }
     }
@@ -60,7 +60,7 @@ class CalculatorFragment : Fragment() {
             backspace.setOnClickListener { backspace() }
             buttonEqual.setOnClickListener { equals() }
 
-            // https://youtu.be/sHTbC3X4Dc4?t=1245
+
     }
 
     private fun makeOperation(str: String) {

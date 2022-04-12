@@ -27,3 +27,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .commit()
     }
 }
+
+fun Fragment.pushFragment(list:List<String>){
+    (requireActivity() as MainActivity).addFragment(HistoryFragment.newInstance(list))
+}
