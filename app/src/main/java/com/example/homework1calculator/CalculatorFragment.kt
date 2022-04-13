@@ -1,3 +1,4 @@
+
 package com.example.homework1calculator
 
 import android.os.Bundle
@@ -29,7 +30,7 @@ class CalculatorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         initButtons()
+        initButtons()
         binding.resultPlace.setOnClickListener {
             pushFragment(operationHistory)
 
@@ -38,27 +39,27 @@ class CalculatorFragment : Fragment() {
 
     private fun initButtons() = with(binding) {
 
-            resultPlace.text = ""
-            workPlace.text = "0"
-            buttonOne.setOnClickListener { makeOperation("1") }
-            buttonTwo.setOnClickListener { makeOperation("2") }
-            buttonThree.setOnClickListener { makeOperation("3") }
-            buttonFour.setOnClickListener { makeOperation("4") }
-            buttonFive.setOnClickListener { makeOperation("5") }
-            buttonSix.setOnClickListener { makeOperation("6") }
-            buttonSeven.setOnClickListener { makeOperation("7") }
-            buttonEight.setOnClickListener { makeOperation("8") }
-            buttonNine.setOnClickListener { makeOperation("9") }
-            buttonZero.setOnClickListener { makeOperation("0") }
-            buttonPlus.setOnClickListener { makeOperation("+") }
-            buttonMinus.setOnClickListener { makeOperation("-") }
-            buttonMult.setOnClickListener { makeOperation("*") }
-            buttonDiv.setOnClickListener { makeOperation("/") }
-            ac.setOnClickListener { clearSpace() }
-            openBrace.setOnClickListener { makeOperation("(") }
-            closeBrace.setOnClickListener { makeOperation(")") }
-            backspace.setOnClickListener { backspace() }
-            buttonEqual.setOnClickListener { equals() }
+        resultPlace.text = ""
+        workPlace.text = "0"
+        buttonOne.setOnClickListener { makeOperation("1") }
+        buttonTwo.setOnClickListener { makeOperation("2") }
+        buttonThree.setOnClickListener { makeOperation("3") }
+        buttonFour.setOnClickListener { makeOperation("4") }
+        buttonFive.setOnClickListener { makeOperation("5") }
+        buttonSix.setOnClickListener { makeOperation("6") }
+        buttonSeven.setOnClickListener { makeOperation("7") }
+        buttonEight.setOnClickListener { makeOperation("8") }
+        buttonNine.setOnClickListener { makeOperation("9") }
+        buttonZero.setOnClickListener { makeOperation("0") }
+        buttonPlus.setOnClickListener { makeOperation("+") }
+        buttonMinus.setOnClickListener { makeOperation("-") }
+        buttonMult.setOnClickListener { makeOperation("*") }
+        buttonDiv.setOnClickListener { makeOperation("/") }
+        ac.setOnClickListener { clearSpace() }
+        openBrace.setOnClickListener { makeOperation("(") }
+        closeBrace.setOnClickListener { makeOperation(")") }
+        backspace.setOnClickListener { backspace() }
+        buttonEqual.setOnClickListener { equals() }
 
 
     }
