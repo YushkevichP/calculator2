@@ -1,6 +1,5 @@
 package com.example.homework1calculator
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.homework1calculator.databinding.FragmentCalculatorBinding
+
 
 class CalculatorFragment : Fragment() {
 
@@ -86,9 +86,6 @@ class CalculatorFragment : Fragment() {
         } catch (e: Exception) {
             Toast.makeText(context, "Incorrect input", Toast.LENGTH_SHORT).show()
         }
-
-        // binding.workPlace.text = Calculator().calculate(str)
-
     }
 
     private fun backspace() {
@@ -104,7 +101,6 @@ class CalculatorFragment : Fragment() {
             else -> Toast.makeText(context, "Nothing in space", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

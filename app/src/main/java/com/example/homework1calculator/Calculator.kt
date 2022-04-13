@@ -17,28 +17,18 @@ class Calculator {
     fun calculate(text: String?): String {
 
         return text?.let {          // функция расширения .let http://developer.alexanderklimov.ru/android/kotlin/with-apply-also.php
-            if (it.contains('(')){
+            if (it.contains('(')) { //
                 calcWithBraces(it)
-            } else {calculateWithNoBraces(it)}
-        }?:""
-
-//        var finalResult = ""
-//
-//        if (text != null) {
-//            if (text.contains('(')) {
-//                finalResult = calcWithBraces(text)
-//
-//            } else finalResult = calculateWithNoBraces(text)
-//
-//        }
-//
-//        return finalResult
-
+            } else {
+                calculateWithNoBraces(it)
+            }
+        } ?: ""
     }
-    //counting without braces
-    private fun calculateWithNoBraces(text: String?): String {
 
-        val trimText = toTrimText(text)
+    //counting without braces
+    private fun calculateWithNoBraces(text: String): String {
+
+        val trimText = text.toTrimText()
         for (i in trimText) {
             if (!i.isCorrectSymbol && !i.isDigit()) {
                 throw Exception("You have entered wrong symbol [$i], try again please")
@@ -46,7 +36,7 @@ class Calculator {
         }
 
         val listNumbers = toListNumbers(trimText).toMutableList()
-        val listSigns = toListSigns(trimText).toMutableList()
+        val listSigns = trimText.toListSigns().toMutableList()
 
         //Final counting here
         while (listSigns.isNotEmpty()) {
@@ -61,16 +51,17 @@ class Calculator {
         }
 
         return listNumbers.last()
+
+    }
+
+    private fun String.toTrimText(): String {
+        return this.trim()
+            .replace(regexSpace, "") ?: "Oops smth went wrong"
     }
 
 
-    private fun toTrimText(text: String?): String {
-        return text?.trim()
-            ?.replace(regexSpace, "") ?: "Oops smth went wrong"
-    }
-
-    private fun toListSigns(textAfterTrim: String): List<String> {
-        return textAfterTrim.split(regFindSigns)
+    private fun String.toListSigns(): List<String> {
+        return this.split(regFindSigns)
             .filter { it.isNotEmpty() }
     }
 
@@ -162,7 +153,8 @@ class Calculator {
             var bufferText = ""
             //println("subText = $subText")
 
-            if (subText.contains(')')) bufferText = calcWithBraces(subText) else bufferText = subText
+            if (subText.contains(')')) bufferText = calcWithBraces(subText) else bufferText =
+                subText
             // println("checkBracesText before replaced = $checkBracesText")
             checkBracesText =
                 checkBracesText.replace("($subText)", calculateWithNoBraces(bufferText))

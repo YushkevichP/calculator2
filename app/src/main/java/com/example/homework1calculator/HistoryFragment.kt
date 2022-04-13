@@ -17,6 +17,7 @@ class HistoryFragment : Fragment() {
         get() = requireNotNull(_binding) {
             "Oops"
         }
+
     private val historyAdapter by lazy { HistoryAdapter(requireContext()) }
 
     override fun onCreateView(
@@ -36,7 +37,6 @@ class HistoryFragment : Fragment() {
 
         val historyList = arguments?.getStringArrayList(KEY_HISTORY)
             ?: emptyList<String>() // если аргументы пустые, то вернем путсой лист, а если все ок то получим по ключу наш лист
-
 
 
         with(binding) {
